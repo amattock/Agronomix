@@ -28,16 +28,6 @@ h2 {
     font-family: 'Montserrat', sans-serif;
 }
 
-.bg-container {
-    min-height: 100vh;
-    transition: all 600ms ease-in;
-}
-
-
-.bg-container.height-change {
-    min-height: 350px;
-}
-
 /* header */
 @keyframes showup {
     0% {
@@ -71,7 +61,13 @@ h2 {
 
 /* main-background */
 .bg-container {
+    min-height: 100vh;
+    transition: all 600ms ease-in;
     background-image: url("./assets/image/main-bg.jpg");
+}
+
+.bg-container.height-change {
+    min-height: 350px;
 }
 
 .bg-container > * {
@@ -96,4 +92,9 @@ h2 {
     display: block;
     font-size: 30px;
     color: white;
+}
+
+/* modal-container */
+.modal-container {
+    display: none;
 }
