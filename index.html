@@ -17,43 +17,48 @@
 </head>
 
 <body>
-    <header>
-        <h1 class="text-3xl font-bold underline">Agronomix</h1>
-            <h2>A visual weather station for your crops</h2>
-    </header>
+    <div id="wrap">
+        <div class="flex flex-col justify-center relative py-16 px-4 overflow-hidden
+            bg-cover bg-no-repeat bg-center bg-container">
+            <header class="relative text-center text-white header">
+                <h1 class="lg:text-5xl sm:text-4xl text-3xl font-bold">Agronomix</h1>
+                <h2 class="lg:text-2xl sm:text-xl mt-5">A visual weather station for your crops</h2>
+                <p>Please enter the location in the search box below</p>
+            </header>
 
-    <div class="container-fluid">
-        <div class="flex-auto">
-            <div class="searcharea">
-                <h2 class="object-center">Search for an area:</h2>
-                    <div class="input-group">
-                        <input type="text" class="form-control" id="searchinput" type="search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" id="searchbtn" type="submit">
-                                    <i class="material-icons">search</i>
-                                </button>
-                            </div>
-                    </div>
+            <div class="flex w-full items-center justify-center relative mt-14 search-container">
+                <form class="border divide-white rounded-md search-area">
+                    <input type="text" class="inline-block align-middle sm:w-80 h-10 text-white text-sm sm:text-base search-text" 
+                        id="searchInput" aria-label="Search" placeholder="Please enter the location"/>
+                    
+                    <button class="inline-block align-middle search-btn" id="searchBtn" type="submit">
+                        <i class="text-xl sm:text-2xl material-icons">search</i>
+                    </button>
+                </form>
+
                 <div class="" id="prevSearches">
                     <!--Buttons for previous searches here-->
                 </div>
             </div>
-
-            <div class="">
-                <div class="container" id="earthforecast">
-                    <!--Weather for current location-->
-                </div>
-            </div>
         </div>
+        
 
+        <!-- satellite Imagery section -->
+        <section class="satellite-container" id="satelliteImagery">Stellite Imagery</section>
+
+        <!-- Weather for current location -->
+        <section class="weather-container" id="earthForecast">MinuteCast Weather</section>
     </div>
+    
+
+
 
     <!-- Optional JavaScript -->
 
     <!-- jQuery-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-        <!-- Popper.js (pop ups/ could be used instead of alerts)-->
+    <!-- Popper.js (pop ups/ could be used instead of alerts)-->
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
         integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
         crossorigin="anonymous"></script>
