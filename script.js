@@ -34,4 +34,6 @@ overlayEl.addEventListener("click", function(event){
 
 modalCloseBtn.addEventListener("click", function(){
     modalContainer.style.display = "none";
+
 });
+
