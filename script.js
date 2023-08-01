@@ -1,4 +1,7 @@
 // Global variables
+var key = "pk.5c29facfe59285e81d61594415350065"
+var api = "https://us1.locationiq.com/v1/search.php?format=json&"
+var searchBtn = document.getElementById('searchBtn')
 let bgContainer = document.querySelector(".bg-container");
 let searchInput = document.querySelector("#searchInput");
 let searchBtn = document.querySelector("#searchBtn");
