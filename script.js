@@ -1,7 +1,4 @@
 // Global variables
-var key = "pk.5c29facfe59285e81d61594415350065"
-var api = "https://us1.locationiq.com/v1/search.php?format=json&"
-var searchBtn = document.getElementById('searchBtn')
 let bgContainer = document.querySelector(".bg-container");
 let searchInput = document.querySelector("#searchInput");
 let searchBtn = document.querySelector("#searchBtn");
@@ -39,6 +36,10 @@ modalCloseBtn.addEventListener("click", function(){
     modalContainer.style.display = "none";
 });
 
+var key = "pk.5c29facfe59285e81d61594415350065"
+var api = "https://us1.locationiq.com/v1/search.php?format=json&"
+
+
 function getLatAndLong(search) {
     fetch(api + "key=" + key + "&q=" + search)
       .then(function (res) {
@@ -48,16 +49,16 @@ function getLatAndLong(search) {
         console.log(data)
         var latitude = data[0].lat
         var longitude = data[0].lon
-        satiliteFunction(latitude, longitude)
+        satelliteFunction(latitude, longitude)
       })
   }
 
   searchBtn.addEventListener("click", function () {
-    let search = document.getElementById('keyword').value.trim();
+    let search = document.getElementById('searchInput').value.trim();
     getLatAndLong(search)
   })
 
-  function satiliteFunction(latitude, longitude) {
+  function satelliteFunction(latitude, longitude) {
     console.log("latitude", latitude)
     console.log("longitude", longitude)
   }
