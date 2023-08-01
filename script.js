@@ -1,40 +1,4 @@
 
-
-// var repoList = document.querySelector('ul');
-// var fetchButton = document.getElementById('fetch-button');
-
-// function getApi() {
-//   // replace `octocat` with anyone else's GitHub username
-//   var requestUrl = 'http://api.agromonitoring.com/agro/1.0/polygons/5abb9fb82c8897000bde3e87?appid=test';
-
-//   fetch(requestUrl)
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       for (var i = 0; i < data.length; i++) {
-//         var listItem = document.createElement('li');
-//         listItem.textContent = data[i].html_url;
-//         repoList.appendChild(listItem);
-//       }
-//     });
-// }
-
-// fetchButton.addEventListener('click', getApi);
- 
-
-
-
-// async function logPolys() {
-    // const response = await fetch("http://api.agromonitoring.com/agro/1.0/polygons/5abb9fb82c8897000bde3e87?appid=test");
-    // const polygons = await response.json();
-    // console.log(polygons);
-    // }
-              
-
-                       
-
-
 // Global variables
 let bgContainer = document.querySelector(".bg-container");
 let searchInput = document.querySelector("#searchInput");
@@ -80,8 +44,7 @@ modalCloseBtn.addEventListener("click", function(){
     modalContainer.style.display = "none";
 
 });
-
-
+// "location IQ"
 var key = "pk.5c29facfe59285e81d61594415350065"
 var api = "https://us1.locationiq.com/v1/search.php?format=json&"
 
@@ -107,26 +70,62 @@ function getLatAndLong(search) {
   function satelliteFunction(latitude, longitude) {
     console.log("latitude", latitude)
     console.log("longitude", longitude)
-  }
+  };
 
-// Alex's add - "Get list of Polys".
-const apiKey = '5377301dcdca71537669d26ce2c115d4';
-const apiUrl = 'https://api.agromonitoring.com/agro/1.0';
-
-const getListOfPolygons = async () => {
+  // "Get list of Polys".
+  const apiKey = '5377301dcdca71537669d26ce2c115d4';
+  const apiUrl = 'https://api.agromonitoring.com/agro/1.0';
+    const getListOfPolygons = async () => {
+    try {
+      const response = await fetch(`${apiUrl}/polygons?appid=${apiKey}`);
+   
+      if (!response.ok) {
+        throw new Error('Failed to fetch the list of polygons');
+      }
+   
+      const data = await response.json();
+      console.log('List of polygons:', data);
+    } catch (error) {
+      console.error('Error fetching the list of polygons:', error.message);
+    }
+   };
+   getListOfPolygons();
+   
+//   "Create Poly"
+ const polygonCoordinates = [
+ [-87.6244212, 41.8755616],
+ ];
+ const createPolygon = async () => {
  try {
-   const response = await fetch(`${apiUrl}/polygons?appid=${apiKey}`);
-
-   if (!response.ok) {
-     throw new Error('Failed to fetch the list of polygons');
-   }
-
-   const data = await response.json();
-   console.log('List of polygons:', data);
+  const response = await fetch(`${apiUrl}/polygons?appid=${apiKey}`, {
+   method: 'POST',
+   headers: {
+    'Content-Type': 'application/json',
+   },
+   body: JSON.stringify({
+    name: 'Your Polygon Name',
+    geo_json: {
+     type: 'Feature',
+     properties: {},
+     geometry: {
+      type: 'Polygon',
+      coordinates: [polygonCoordinates],
+     },
+    },
+   }),
+  });
+  if (!response.ok) {
+   throw new Error('Failed to create the polygon');
+  }
+  const data = await response.json();
+  console.log('Polygon created:', data);
  } catch (error) {
-   console.error('Error fetching the list of polygons:', error.message);
+  console.error('Error creating the polygon:', error.message);
  }
-};
+ };
+ createPolygon();
 
-getListOfPolygons();
+
+
+
 
