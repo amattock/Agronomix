@@ -81,7 +81,7 @@ modalCloseBtn.addEventListener("click", function(){
 
 });
 
-// Alex's add - "Get list of Polys"
+// Alex's add - "Get list of Polys".
 const apiKey = '5377301dcdca71537669d26ce2c115d4';
 const apiUrl = 'https://api.agromonitoring.com/agro/1.0';
 
