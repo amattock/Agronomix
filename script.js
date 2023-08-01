@@ -38,3 +38,16 @@ overlayEl.addEventListener("click", function(event){
 modalCloseBtn.addEventListener("click", function(){
     modalContainer.style.display = "none";
 });
+
+function getLatAndLong(search) {
+    fetch(api + "key=" + key + "&q=" + search)
+      .then(function (res) {
+        return res.json()
+      })
+      .then(function (data) {
+        console.log(data)
+        var latitude = data[0].lat
+        var longitude = data[0].lon
+        satiliteFunction(latitude, longitude)
+      })
+  }
