@@ -56,3 +56,8 @@ function getLatAndLong(search) {
     let search = document.getElementById('keyword').value.trim();
     getLatAndLong(search)
   })
+
+  function satiliteFunction(latitude, longitude) {
+    console.log("latitude", latitude)
+    console.log("longitude", longitude)
+  }
