@@ -12,7 +12,7 @@ searchBtn.addEventListener("click", function(event){
     event.preventDefault();
     let searchValue = searchInput.value.trim();
     if(searchValue === ''){
-        displayModalContainer();
+        displayModalContainer("Location not found", "Please enter the required location information.");
         return;
     }else{
         bgContainer.classList.add("height-change");
@@ -22,7 +22,14 @@ searchBtn.addEventListener("click", function(event){
 
 
 // Display the modal box, it disappears when the background or close button is clicked
-function displayModalContainer(){
+function displayModalContainer(title, text){
+    let modalTitle = document.getElementById("modal-title");
+    let modalText = document.getElementById("modal-text");
+
+    // It enables reuse
+    modalTitle.textContent = title;
+    modalText.textContent = text;
+
     modalContainer.style.display = "block";
 }
 
