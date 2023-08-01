@@ -81,6 +81,34 @@ modalCloseBtn.addEventListener("click", function(){
 
 });
 
+
+var key = "pk.5c29facfe59285e81d61594415350065"
+var api = "https://us1.locationiq.com/v1/search.php?format=json&"
+
+
+function getLatAndLong(search) {
+    fetch(api + "key=" + key + "&q=" + search)
+      .then(function (res) {
+        return res.json()
+      })
+      .then(function (data) {
+        console.log(data)
+        var latitude = data[0].lat
+        var longitude = data[0].lon
+        satelliteFunction(latitude, longitude)
+      })
+  }
+
+  searchBtn.addEventListener("click", function () {
+    let search = document.getElementById('searchInput').value.trim();
+    getLatAndLong(search)
+  })
+
+  function satelliteFunction(latitude, longitude) {
+    console.log("latitude", latitude)
+    console.log("longitude", longitude)
+  }
+
 // Alex's add - "Get list of Polys".
 const apiKey = '5377301dcdca71537669d26ce2c115d4';
 const apiUrl = 'https://api.agromonitoring.com/agro/1.0';
@@ -101,3 +129,4 @@ const getListOfPolygons = async () => {
 };
 
 getListOfPolygons();
+
