@@ -8,6 +8,7 @@
 body {
     font-size: 1rem;
     font-family: 'Montserrat';
+    box-sizing: border-box;
     background-color: rgb(53, 63, 92);
 }
 
@@ -97,4 +98,37 @@ h2 {
 /* modal-container */
 .modal-container {
     display: none;
+}
+
+/* satellite-imagery */
+.lists-container {
+    background-color: #525f7f;
+}
+
+tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+tr:last-child {
+    border-bottom: 0;
+}
+
+.lists-table {
+    width: 100%;
+}
+
+.lists-table td {
+    padding: 12px 8px;
+    width: calc(100% / 4);
+}
+
+@media screen and (max-width: 360px){
+    .lists-container {
+        overflow: hidden;
+        overflow-x: scroll;
+    }
+
+    .lists-table {
+        width: 360px;
+    }
 }
