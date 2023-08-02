@@ -9,6 +9,7 @@ let overlayEl = document.querySelector("#overlay");
 let listsTable = document.querySelector(".lists-table");
 let apiKey = '5377301dcdca71537669d26ce2c115d4';
 let apiUrl = 'https://api.agromonitoring.com/agro/1.0';
+
 var key = "pk.5c29facfe59285e81d61594415350065";
 var api = "https://us1.locationiq.com/v1/search.php?format=json&";
 
@@ -51,12 +52,14 @@ modalCloseBtn.addEventListener("click", function () {
 
 // "location IQ"
 function getLatAndLong(search) {
+
     return fetch(api + "key=" + key + "&q=" + search)
         .then(function (res) {
             return res.json()
         })
         .then(function (data) {
-            return [+data[0].lat, +data[0].lon]
+            getWeather(data[0].lat, data[0].lon);
+            return [+data[0].lat, +data[0].lon];
         })
 }
 
@@ -64,6 +67,7 @@ searchBtn.addEventListener("click", function () {
     let search = document.getElementById('searchInput').value.trim();
     getLatAndLong(search)
         .then(createPolygon)
+        .then(getMap)
 });
 
 function satelliteFunction(latitude, longitude) {
@@ -164,10 +168,41 @@ const createPolygon = async (coordinates) => {
         }
         const data = await response.json();
         console.log('Polygon created:', data);
+        localStorage.setItem('Polygon created:', searchInput.value, square);
+        return data;
     } catch (error) {
         console.error('Error creating the polygon:', error.message);
     }
 }
+
+function getWeather(latitude, longitude) {
+    fetch("https:api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+            console.log("weather:", data)
+        })
+}
+
+function getMap(data) {
+    const startDate = new Date();
+    startDate.setDate(startDate.getDate() - 5);
+   
+    
+    const endDate = new Date().toISOString();
+    return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startDate + "&end=" + endDate + "&polyid=" + data.id + "&appid=" + apiKey)
+        .then(function (response) {
+            return response.json()
+        })
+        .then(function (data) {
+            console.log("Sat Data:", data)
+        })
+        .catch(function(error){
+            console.log(error)
+        })
+}
+
 
 
 
