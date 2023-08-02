@@ -122,6 +122,12 @@ tr:last-child {
     width: calc(100% / 4);
 }
 
+/* weather-data */
+.weather-box > *,
+.weather-contents > * {
+    color: #ffffff;
+}
+
 @media screen and (max-width: 360px){
     .lists-container {
         overflow: hidden;
