@@ -1,7 +1,7 @@
 # Agronomix
 
 ## Introduction
-Agronomix is a web application dedicated to providing farmers and other stakeholders with valuable data on crop health, weather conditions, and additional relevant metrics. 
+Agronomix is a web application dedicated to providing farmers and other stakeholders with valuable data on lists of location, weather conditions, and additional relevant metrics. 
 
 The main goal of this dashboard is to assist farmers and stakeholders in making data-driven decisions for their agricultural activities.
 
@@ -9,7 +9,7 @@ The main goal of this dashboard is to assist farmers and stakeholders in making 
 ![Agromonitoring Dashboard Screenshot](./assets/image/screenshot.png)
 
 ## Features
-- Crop Health Data: The dashboard utilizes the Agromonitoring API to generate polygons and retrieve a list of crop health data for different agricultural areas.
+- Agricultural Area Insights: The dashboard utilizes the Agromonitoring API to create polygons and retrieve data lists showcasing insights about different agricultural regions.
 - Weather Conditions: Users can access real-time weather information to stay informed about the current climate in their farming regions.
 - Location Data: The LocationIQ API is integrated to fetch latitude and longitude information for precise location tracking.
 
