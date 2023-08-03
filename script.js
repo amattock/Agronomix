@@ -9,7 +9,6 @@ let overlayEl = document.querySelector("#overlay");
 let listsTable = document.querySelector(".lists-table");
 let apiKey = '5377301dcdca71537669d26ce2c115d4';
 let apiUrl = 'https://api.agromonitoring.com/agro/1.0';
-
 var key = "pk.5c29facfe59285e81d61594415350065";
 var api = "https://us1.locationiq.com/v1/search.php?format=json&";
 
@@ -57,10 +56,10 @@ function getLatAndLong(search) {
         .then(function (res) {
             return res.json()
         })
-        .then(function (data) { 
+        .then(function (data) {
             const lat = +data[0].lat;
             const lon = +data[0].lon;
-            
+
             getWeather(data[0].lat, data[0].lon);
 
             // Store coordinates in local storage
@@ -133,7 +132,7 @@ const getListOfPolygons = async () => {
 getListOfPolygons();
 
 
-//   "Create Poly"
+// Create Poly API
 // create sperate function for this
 const createPolygon = async (coordinates) => {
     const halfSide = 250;
@@ -185,14 +184,15 @@ const createPolygon = async (coordinates) => {
     }
 }
 
+// weather API
 function getWeather(latitude, longitude) {
     fetch("https:api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
         .then(function (data) {
-            let temp = ((data.main.temp - 273.15) * 9/5 + 32).toFixed(2);
-            let realTemp = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(2);
+            let temp = ((data.main.temp - 273.15) * 9 / 5 + 32).toFixed(2);
+            let realTemp = ((data.main.feels_like - 273.15) * 9 / 5 + 32).toFixed(2);
             let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
 
             let weatherBox = document.querySelector(".weather-box");
@@ -225,16 +225,16 @@ function getWeather(latitude, longitude) {
                 </div>`;
 
             weatherBox.innerHTML = weatherContents;
-            
+
         })
 }
 
-
+// satellite API
 function getMap(data) {
     const startDate = new Date();
     startDate.setDate(startDate.getDate() - 5);
-   
-    
+
+
     const endDate = new Date().toISOString();
     return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startDate + "&end=" + endDate + "&polyid=" + data.id + "&appid=" + apiKey)
         .then(function (response) {
@@ -243,7 +243,7 @@ function getMap(data) {
         .then(function (data) {
             console.log("Sat Data:", data)
         })
-        .catch(function(error){
+        .catch(function (error) {
             console.log(error)
         })
 }
