@@ -57,8 +57,17 @@ function getLatAndLong(search) {
         .then(function (res) {
             return res.json()
         })
-        .then(function (data) {
+        .then(function (data) { 
+            const lat = +data[0].lat;
+            const lon = +data[0].lon;
+            
             getWeather(data[0].lat, data[0].lon);
+
+            // Store coordinates in local storage
+            const coordinates = [lat, lon];
+            localStorage.setItem('lastCoordinates', JSON.stringify(coordinates));
+            localStorage.setItem('lastSearch', JSON.stringify(search));
+
             return [+data[0].lat, +data[0].lon];
         })
 }
@@ -69,6 +78,7 @@ searchBtn.addEventListener("click", function () {
         .then(createPolygon)
         .then(getMap)
 });
+
 
 function satelliteFunction(latitude, longitude) {
     console.log("latitude", latitude)
@@ -95,8 +105,9 @@ const getListOfPolygons = async () => {
 
         const data = await response.json();
         console.log('List of polygons:', data);
-        if (data.length !== 0) {
 
+
+        if (data.length !== 0) {
             let tbody = document.createElement("tbody");
             let rows = "";
 
@@ -104,7 +115,7 @@ const getListOfPolygons = async () => {
                 let formattedDate = formatDate(lists.created_at);
                 rows += `
                     <tr>
-                        <td class="name">${lists.name}</td>
+                        <td class="capitalize name">${lists.name}</td>
                         <td class="created">${formattedDate}</td>
                         <td class="area">${(lists.area.toFixed(2))}ha</td>
                     </tr>
@@ -167,7 +178,6 @@ const createPolygon = async (coordinates) => {
             throw new Error('Failed to create the polygon');
         }
         const data = await response.json();
-        console.log('Polygon created:', data);
         localStorage.setItem('Polygon created:', searchInput.value, square);
         return data;
     } catch (error) {
@@ -181,9 +191,44 @@ function getWeather(latitude, longitude) {
             return response.json()
         })
         .then(function (data) {
-            console.log("weather:", data)
+            let temp = ((data.main.temp - 273.15) * 9/5 + 32).toFixed(2);
+            let realTemp = ((data.main.feels_like - 273.15) * 9/5 + 32).toFixed(2);
+            let iconUrl = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+
+            let weatherBox = document.querySelector(".weather-box");
+            let weatherContents = `
+                <div class="self-stretch bg-slate-800 rounded-md p-6 weather-description">
+                    <div class="text-xl font-bold capitalize weather-location add-icon location-icon">${searchInput.value}</div>
+                    <div class="pl-6 mt-2  weather-icon">
+                        <img class="display-block" src="${iconUrl}" alt="weather icon" />
+                    </div>
+                    <div class="pl-6 current-weather">${data.weather[0].main}</div>
+                    <div class="pl-6 mt-6 text-2xl font-bold current-weather">${temp}℉</div>
+                </div>
+
+                <div class="mt-5 sm:mt-0 self-stretch p-6 border-slate-500 bg-slate-800 rounded-md weather-conditions">
+                    <div class="text-xs font-light conditions-title">All conditions</div>
+                    <ul class="flex flex-wrap pt-5 weather-ul">
+                        <li class="mb-7 basis-1/2">
+                            <div class="text-sm font-light conditions-title add-icon humidity-icon">Humidity</div>
+                            <p class="pl-6 mt-2 font-bold sm:text-lg">${data.main.humidity}%</p>
+                        </li>
+                        <li class="mb-7 basis-1/2">
+                            <div class="text-sm font-light conditions-title add-icon wind-icon">Wind</div>
+                            <p class="pl-6 mt-2 font-bold sm:text-lg">${data.wind.speed} MPH</p>
+                        </li>
+                        <li class="basis-1/2">
+                            <div class="text-sm font-light conditions-title add-icon temperature-icon">Real feel</div>
+                            <p class="pl-6 mt-2 font-bold sm:text-lg">${realTemp}℉</p>
+                        </li>
+                    </ul>
+                </div>`;
+
+            weatherBox.innerHTML = weatherContents;
+            
         })
 }
+
 
 function getMap(data) {
     const startDate = new Date();
@@ -202,6 +247,28 @@ function getMap(data) {
             console.log(error)
         })
 }
+
+
+// On page load, retrieve and display weather information for the last searched location
+window.addEventListener('DOMContentLoaded', function () {
+    const lastCoordinates = JSON.parse(localStorage.getItem('lastCoordinates'));
+    const lastSearch = JSON.parse(localStorage.getItem('lastSearch'));
+
+    if (lastCoordinates) {
+        getWeather(lastCoordinates[0], lastCoordinates[1]);
+    }
+
+    // Wait for the element to be created, then update its content
+    const observer = new MutationObserver(function () {
+        const lastSearchLocation = document.querySelector(".weather-location");
+        if (lastSearchLocation) {
+            lastSearchLocation.textContent = lastSearch;
+            observer.disconnect(); // Stop observing once the element is found and updated
+        }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+});
 
 
 

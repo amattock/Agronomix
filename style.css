@@ -122,6 +122,58 @@ tr:last-child {
     width: calc(100% / 4);
 }
 
+/* weather-data */
+.weather-box > *,
+.weather-contents > * {
+    color: #ffffff;
+}
+
+.add-icon {
+    position: relative;
+    padding-left: 22px;
+}
+
+.add-icon::before {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 0;
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.location-icon::before {
+    top: 4px;
+    background-image: url("./assets/image/location.png");
+}
+
+.humidity-icon::before {
+    background-image: url("./assets/image/humidity.png");
+}
+
+.wind-icon::before {
+    background-image: url("./assets/image/wind.png");
+}
+
+.temperature-icon::before {
+    background-image: url("./assets/image/temperature.png");
+}
+
+.weather-description {
+    margin-right: 15px;
+    width: calc(50% - 15px);
+}
+
+@media screen and (max-width: 640px){
+    .weather-description {
+        margin-right: 0;
+        width: 100%;
+    }
+}
+
 @media screen and (max-width: 360px){
     .lists-container {
         overflow: hidden;
