@@ -232,10 +232,6 @@ function getWeather(latitude, longitude) {
 
 // satellite API
 function getMap(data) {
-    // const startDate = new Date();
-    // startDate.setDate(startDate.getDate() - 5);
-
-    // const endDate = new Date().toISOString();
     const currentDate = new Date();
     const fiveDaysAgo = new Date(currentDate);
     fiveDaysAgo.setDate(currentDate.getDate() - 5);
@@ -243,7 +239,6 @@ function getMap(data) {
     const startUnixTime = Math.floor(fiveDaysAgo.getTime() / 1000);
     const endUnixTime = Math.floor(currentDate.getTime() / 1000);
 
-    console.log(startUnixTime, endUnixTime)
 
     return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startUnixTime + "&end=" + endUnixTime + "&polyid=" + data.id + "&appid=" + apiKey)
         .then(function (response) {
