@@ -7,8 +7,8 @@ let modalContainer = document.querySelector("#modal");
 let modalCloseBtn = document.querySelector("#modalClose");
 let overlayEl = document.querySelector("#overlay");
 let listsTable = document.querySelector(".lists-table");
-let apiKey = '5377301dcdca71537669d26ce2c115d4';
-let apiUrl = 'https://api.agromonitoring.com/agro/1.0';
+let apiKey = 'c72b3654181184b293c82318887883af';
+let apiUrl = 'http://api.agromonitoring.com/agro/1.0';
 var key = "pk.5c29facfe59285e81d61594415350065";
 var api = "https://us1.locationiq.com/v1/search.php?format=json&";
 let satelliteImg = document.querySelector(".satellite-img");
@@ -187,7 +187,7 @@ const createPolygon = async (coordinates) => {
 
 // weather API
 function getWeather(latitude, longitude) {
-    fetch("https:api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
+    fetch("https://api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
