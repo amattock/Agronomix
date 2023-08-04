@@ -186,7 +186,7 @@ const createPolygon = async (coordinates) => {
 
 // weather API
 function getWeather(latitude, longitude) {
-    fetch("https:api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
+    fetch("https://api.agromonitoring.com/agro/1.0/weather?lat=" + latitude + "&lon=" + longitude + "&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
