@@ -11,6 +11,7 @@ let apiKey = '5377301dcdca71537669d26ce2c115d4';
 let apiUrl = 'https://api.agromonitoring.com/agro/1.0';
 var key = "pk.5c29facfe59285e81d61594415350065";
 var api = "https://us1.locationiq.com/v1/search.php?format=json&";
+let satelliteImg = document.querySelector(".satellite-img");
 
 
 // Recall relevant data based on the location searched
@@ -231,17 +232,30 @@ function getWeather(latitude, longitude) {
 
 // satellite API
 function getMap(data) {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
+    // const startDate = new Date();
+    // startDate.setDate(startDate.getDate() - 5);
 
+    // const endDate = new Date().toISOString();
+    const currentDate = new Date();
+    const fiveDaysAgo = new Date(currentDate);
+    fiveDaysAgo.setDate(currentDate.getDate() - 5);
 
-    const endDate = new Date().toISOString();
-    return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startDate + "&end=" + endDate + "&polyid=" + data.id + "&appid=" + apiKey)
+    const startUnixTime = Math.floor(fiveDaysAgo.getTime() / 1000);
+    const endUnixTime = Math.floor(currentDate.getTime() / 1000);
+
+    console.log(startUnixTime, endUnixTime)
+
+    return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startUnixTime + "&end=" + endUnixTime + "&polyid=" + data.id + "&appid=" + apiKey)
         .then(function (response) {
             return response.json()
         })
         .then(function (data) {
             console.log("Sat Data:", data)
+
+            satelliteImg.src = data[0].image.truecolor;
+            satelliteImg.classList.remove("hidden");
+
+            localStorage.setItem('satelliteImgUrl', JSON.stringify(data[0].image.truecolor));
         })
         .catch(function (error) {
             console.log(error)
@@ -253,14 +267,23 @@ function getMap(data) {
 window.addEventListener('DOMContentLoaded', function () {
     const lastCoordinates = JSON.parse(localStorage.getItem('lastCoordinates'));
     const lastSearch = JSON.parse(localStorage.getItem('lastSearch'));
-
+    const satelliteImgUrl = JSON.parse(localStorage.getItem('satelliteImgUrl'));
+    
+    
     if (lastCoordinates) {
         getWeather(lastCoordinates[0], lastCoordinates[1]);
+    }
+    
+    if (satelliteImgUrl) {
+        satelliteImg.src = satelliteImgUrl;
+        satelliteImg.classList.remove("hidden");
     }
 
     // Wait for the element to be created, then update its content
     const observer = new MutationObserver(function () {
         const lastSearchLocation = document.querySelector(".weather-location");
+
+
         if (lastSearchLocation) {
             lastSearchLocation.textContent = lastSearch;
             observer.disconnect(); // Stop observing once the element is found and updated
