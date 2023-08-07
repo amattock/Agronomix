@@ -75,7 +75,6 @@ searchBtn.addEventListener("click", function () {
     let search = document.getElementById('searchInput').value.trim();
     getLatAndLong(search)
         .then(createPolygon)
-        .then(getMap)
 });
 
 
@@ -230,13 +229,14 @@ function getWeather(latitude, longitude) {
 }
 
 // satellite API
-function getMap(data) {
-    const startDate = new Date();
-    startDate.setDate(startDate.getDate() - 5);
-
-
-    const endDate = new Date().toISOString();
-    return fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + startDate + "&end=" + endDate + "&polyid=" + data.id + "&appid=" + apiKey)
+let startDate = new Date();
+    let endDate=startDate;
+    console.log(endDate);
+    let startparam=startDate.setDate(startDate.getDate() - 5);
+   console.log(Math.floor(startparam/1000));
+    let endparam=endDate.setDate(endDate.getDate()-10)
+    console.log(Math.floor(endparam/1000));
+    fetch("http://api.agromonitoring.com/agro/1.0/image/search?start=" + Math.floor(endparam/1000) + "&end=" + Math.floor(startparam/1000) + "&polyid=64ceb59c287b0e0333fce8e9&appid=c72b3654181184b293c82318887883af")
         .then(function (response) {
             return response.json()
         })
@@ -246,7 +246,6 @@ function getMap(data) {
         .catch(function (error) {
             console.log(error)
         })
-}
 
 
 // On page load, retrieve and display weather information for the last searched location
